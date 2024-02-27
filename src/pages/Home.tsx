@@ -6,24 +6,23 @@ import { useToken } from '../hooks/useToken';
 
 // Context
 import { AuthContext } from '../context/AuthContext';
-import { useArtist } from '../features/artists/useArtist';
+
+// Components
+import ErrorMessage from '../ui/ErrorMessage';
+import FeaturedPlaylists from '../features/featured_playlists/FeaturedPlaylists';
+import Loader from '../ui/Loader';
 
 export default function Home() {
-  useToken();
-  const { token } = useContext(AuthContext);
-  const { artist, artistIsLoading, artistError } = useArtist(
-    token,
-    '0TnOYISbd1XYRBk9myaseg'
-  );
+  const { isLoading } = useToken();
+  const { token, error } = useContext(AuthContext);
+
+  if (isLoading) return <Loader />;
+
+  if (error) return <ErrorMessage message={error} />;
 
   return (
-    <div>
-      <h1>Home</h1>
-      {artistIsLoading
-        ? 'loading'
-        : artistError
-        ? artistError.message
-        : artist?.name}
-    </div>
+    <>
+      <FeaturedPlaylists token={token} />
+    </>
   );
 }

@@ -14,5 +14,7 @@ export async function getToken() {
 
   const data = await res.json();
 
-  return data;
+  if (!res.ok) return { statusText: 'error', status: res.status, ...data };
+
+  return { statusText: 'success', status: res.status, ...data };
 }

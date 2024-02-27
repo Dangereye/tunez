@@ -8,22 +8,31 @@ import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../context/AuthContext';
 
 // Services
-import { getToken } from '../services/tokenApi';
+import { getToken } from '../services/token';
 
 // Interfaces
-import { IToken } from '../interfaces/IToken';
+import { ITokenError, ITokenSuccess } from '../interfaces/IToken';
 
 export function useToken() {
-  const { setToken } = useContext(AuthContext);
+  const { token, setToken, error, setError } = useContext(AuthContext);
 
-  const { data } = useQuery<IToken>({
+  const { data, isLoading } = useQuery<ITokenSuccess | ITokenError>({
     queryKey: ['token'],
     queryFn: getToken,
     staleTime: 3600000,
   });
 
   useEffect(() => {
+    setError('');
     if (!data) return;
-    setToken(data?.access_token);
-  }, [data, setToken]);
+    if (data.statusText === 'error') {
+      setToken('');
+      setError(`Status: ${data.status} - ${data.error_description}.`);
+    } else {
+      if (token) return;
+      setToken(data.access_token);
+    }
+  }, [data, token, error, setToken, setError]);
+
+  return { isLoading };
 }

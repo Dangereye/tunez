@@ -8,10 +8,10 @@ import Player from './Player';
 
 export default function AppLayout() {
   return (
-    <div className='grid gap-1 grid-cols-1 sm:grid-cols-[100px_minmax(0,_1fr)] md:grid-cols-[200px_minmax(900px,_1fr)] grid-rows-[50px_calc(100vh_-_150px)_100px]'>
+    <div className='grid gap-2  md:grid-cols-[200px_minmax(0,_1fr)] grid-rows-[50px_calc(100vh_-_182px)_100px]'>
       <Sidebar />
       <Header />
-      <main>
+      <main className='flex flex-col h-full gap-4 p-4 overflow-scroll overflow-x-hidden bg-zinc-50'>
         <Outlet />
       </main>
       <Player />
