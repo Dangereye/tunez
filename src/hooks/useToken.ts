@@ -16,23 +16,24 @@ import { ITokenError, ITokenSuccess } from '../interfaces/IToken';
 export function useToken() {
   const { token, setToken, error, setError } = useContext(AuthContext);
 
-  const { data, isLoading } = useQuery<ITokenSuccess | ITokenError>({
+  const { data, isLoading, refetch } = useQuery<ITokenSuccess | ITokenError>({
     queryKey: ['token'],
     queryFn: getToken,
-    staleTime: 3600000,
+    // 55 mins
+    staleTime: 3300000,
   });
 
   useEffect(() => {
-    setError('');
-    if (!data) return;
+    if (token) return;
+    if (!data || isLoading) return;
     if (data.statusText === 'error') {
       setToken('');
       setError(`Status: ${data.status} - ${data.error_description}.`);
     } else {
-      if (token) return;
       setToken(data.access_token);
+      setError('');
     }
-  }, [data, token, error, setToken, setError]);
+  }, [data, isLoading, token, error, setToken, setError]);
 
-  return { isLoading };
+  return { isLoading, refetch };
 }

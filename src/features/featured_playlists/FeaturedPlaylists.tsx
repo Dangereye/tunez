@@ -3,16 +3,12 @@ import useFeaturedPlaylists from './useFeaturedPlaylists';
 
 // Components
 import Loader from '../../ui/Loader';
-import ErrorMessage from '../../ui/ErrorMessage';
+import ErrorMessage from '../../ui/TokenErrorMessage';
 import Cards from '../../ui/Cards';
 import Card from '../../ui/Card';
 
-type FeaturedPlaylistProps = {
-  token: string;
-};
-
-export default function FeaturedPlaylists({ token }: FeaturedPlaylistProps) {
-  const { data, isLoading, error } = useFeaturedPlaylists(token);
+export default function FeaturedPlaylists() {
+  const { data, isLoading, error } = useFeaturedPlaylists();
 
   if (isLoading) return <Loader />;
 

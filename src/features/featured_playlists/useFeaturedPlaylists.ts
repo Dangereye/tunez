@@ -1,3 +1,6 @@
+// React
+import { useContext } from 'react';
+
 // React query
 import { useQuery } from '@tanstack/react-query';
 
@@ -7,11 +10,22 @@ import { getFeaturedPlaylists } from '../../services/playlists';
 // Interfaces
 import { IFeaturedPlaylists } from '../../interfaces/IFeaturedPlaylists';
 
-export default function useFeaturedPlaylists(token: string) {
-  const { data, isLoading, error } = useQuery<IFeaturedPlaylists>({
-    queryKey: ['featured-playlists', token.substring(0, 3)],
+// Context
+import { AuthContext } from '../../context/AuthContext';
+
+export default function useFeaturedPlaylists() {
+  const { token, setToken } = useContext(AuthContext);
+
+  const { data, isLoading, error, refetch } = useQuery<IFeaturedPlaylists>({
+    queryKey: ['featured-playlists'],
     queryFn: () => getFeaturedPlaylists(token),
+    enabled: !!token,
   });
+
+  if (error) {
+    setToken('');
+    refetch;
+  }
 
   return { data, isLoading, error };
 }
