@@ -10,6 +10,7 @@ import { AuthContextProvider } from './context/AuthContext';
 
 // Pages
 import Home from './pages/Home';
+import Playlist from './pages/Playlist';
 
 // Components
 import AppLayout from './ui/AppLayout';
@@ -22,6 +23,7 @@ export default function App() {
           <Routes>
             <Route element={<AppLayout />}>
               <Route path='/' element={<Home />} />
+              <Route path='/playlist/:playlistId' element={<Playlist />} />
             </Route>
           </Routes>
         </BrowserRouter>

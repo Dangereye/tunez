@@ -1,4 +1,4 @@
-export interface IPlaylistItem {
+export interface IFeaturedPlaylist {
   collaborative: boolean;
   description: string;
   external_urls: {

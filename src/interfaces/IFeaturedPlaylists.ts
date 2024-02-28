@@ -1,5 +1,5 @@
 // Interfaces
-import { IPlaylistItem } from './PlayListItem';
+import { IFeaturedPlaylist } from './IFeaturedPlaylist';
 
 export interface IFeaturedPlaylists {
   message: string;
@@ -10,6 +10,6 @@ export interface IFeaturedPlaylists {
     offset: number;
     previous: string;
     total: number;
-    items: IPlaylistItem[];
+    items: IFeaturedPlaylist[];
   };
 }

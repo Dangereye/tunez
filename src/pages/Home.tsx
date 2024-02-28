@@ -1,5 +1,5 @@
 // Components
-import FeaturedPlaylists from '../features/featured_playlists/FeaturedPlaylists';
+import FeaturedPlaylists from '../features/playlists/FeaturedPlaylists';
 
 export default function Home() {
   return (
