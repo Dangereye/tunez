@@ -1,5 +1,6 @@
 // React
 import { useState } from 'react';
+import Button from './Button';
 
 type SectionProps<T> = {
   heading: string | undefined;
@@ -24,9 +25,9 @@ export default function Cards<T>({
     <section className='flex flex-col gap-4'>
       <header className='flex justify-between'>
         <h2 className='text-2xl font-bold'>{heading}</h2>
-        <button onClick={toggleExpand}>
+        <Button onClick={toggleExpand} disabled={false}>
           {expanded ? 'Show less' : 'Show all'}
-        </button>
+        </Button>
       </header>
       <div className='grid md:grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] grid-cols-[repeat(auto-fill,_minmax(150px,_1fr))] gap-2'>
         {data?.map((item: T) => render(item))}
