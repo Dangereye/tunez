@@ -7,11 +7,11 @@ import usePlaylist from '../features/playlists/usePlaylist';
 // Components
 import Loader from '../ui/Loader';
 import ErrorMessage from '../ui/ErrorMessage';
+import SpotifyIcon from '../ui/SpotifyIcon';
 
 // Utilities
 import { formatNumber } from '../utilities/formatNumber';
 import { formatRuntime } from '../utilities/formatRuntime';
-import SpotifyIcon from '../ui/SpotifyIcon';
 
 export default function Playlist() {
   const { playlistId } = useParams();
@@ -26,7 +26,8 @@ export default function Playlist() {
   return (
     <>
       <header
-        className={`flex items-end p-8 gap-8 text-[${primaryColor}] bg-zinc-950 h-[350px]`}
+        style={{ color: primaryColor }}
+        className={`flex items-end p-8 gap-8 bg-zinc-950 h-[350px]`}
       >
         <div className='flex flex-col gap-2 leading-none'>
           <div className='capitalize'>{data?.type}</div>
