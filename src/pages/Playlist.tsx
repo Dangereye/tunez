@@ -1,5 +1,5 @@
 // React router
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 // Hooks
 import usePlaylist from '../features/playlists/usePlaylist';
@@ -11,6 +11,7 @@ import ErrorMessage from '../ui/ErrorMessage';
 // Utilities
 import { formatNumber } from '../utilities/formatNumber';
 import { formatRuntime } from '../utilities/formatRuntime';
+import SpotifyIcon from '../ui/SpotifyIcon';
 
 export default function Playlist() {
   const { playlistId } = useParams();
@@ -20,34 +21,60 @@ export default function Playlist() {
 
   if (error) return <ErrorMessage message={error.message} />;
 
+  const primaryColor = data?.primary_color || '#ffffff';
+
   return (
     <>
       <header
-        style={{ backgroundImage: `url(${data?.images[0].url})` }}
-        className='flex w-full p-4 text-white bg-center bg-cover h-1/3'
+        className={`flex items-end p-8 gap-8 text-[${primaryColor}] bg-zinc-950 h-[350px]`}
       >
-        <div className='flex flex-col self-end gap-2 leading-none'>
+        <div className='flex flex-col gap-2 leading-none'>
           <div className='capitalize'>{data?.type}</div>
-          <h1 className='mb-6 text-8xl'>{data?.name}</h1>
-          <div>{data?.description}</div>
-          <div className='flex gap-2'>
-            <div>
-              Followers:{' '}
-              <span className='font-medium'>
-                {formatNumber(data?.followers.total)}
-              </span>
-            </div>
-            <div>∘</div>
-            <div>
-              Songs: <span className='font-medium'>{data?.tracks.total}</span>
-            </div>
-            <div>∘</div>
+          <h1 className='mb-4 text-7xl'>{data?.name}</h1>
+          <div className='mb-2 text-2xl italic'>{data?.description}</div>
+          <div className='flex items-center gap-2'>
+            {data?.uri && (
+              <>
+                <Link
+                  to={data?.uri}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='flex items-center gap-1'
+                >
+                  <div className='w-[21px] h[21px]'>
+                    <SpotifyIcon />
+                  </div>
+                  <div>Spotify</div>
+                </Link>
+                <div>∘</div>
+              </>
+            )}
+            {data?.followers && (
+              <>
+                <div>
+                  Followers:{' '}
+                  <span className='font-medium'>
+                    {formatNumber(data?.followers?.total)}
+                  </span>
+                </div>
+                <div>∘</div>
+              </>
+            )}
+            {data?.tracks.total && (
+              <>
+                <div>
+                  Songs:{' '}
+                  <span className='font-medium'>{data?.tracks?.total}</span>
+                </div>
+                <div>∘</div>
+              </>
+            )}
             <div>
               Runtime:{' '}
               <span className='font-medium'>
                 {formatRuntime(
-                  data?.tracks.items.reduce(
-                    (acc, curr) => acc + curr.track.duration_ms,
+                  data?.tracks?.items?.reduce(
+                    (acc, curr) => acc + curr?.track?.duration_ms || 0,
                     0
                   )
                 )}

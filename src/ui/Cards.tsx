@@ -22,7 +22,7 @@ export default function Cards<T>({
   if (!expanded) data = data?.filter((_, i) => i < 8);
 
   return (
-    <section className='flex flex-col gap-4'>
+    <section className='flex flex-col gap-4 p-4'>
       <header className='flex justify-between'>
         <h2 className='text-2xl font-bold'>{heading}</h2>
         <Button onClick={toggleExpand} disabled={false}>

@@ -16,6 +16,7 @@ export interface IPlaylist {
     width: number;
   }[];
   name: string;
+  primary_color: string;
   owner: {
     external_urls: {
       spotify: string;
