@@ -8,23 +8,22 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AuthContext } from '../../context/AuthContext';
 
 // Services
-import { getFeaturedPlaylists } from '../../services/playlists';
+import { getPlaylistCoverImage } from '../../services/playlists';
 
 // Interfaces
-import { IFeaturedPlaylists } from '../../interfaces/IFeaturedPlaylists';
 import { IError } from '../../interfaces/IError';
+import { IPlaylistCoverImage } from '../../interfaces/IPlaylistCoverImage';
 
-export default function useFeaturedPlaylists() {
+export default function usePlaylistCoverImage(playlistId: string | undefined) {
   const { token, setToken } = useContext(AuthContext);
   const queryClient = useQueryClient();
-
   const { data, isLoading, error, refetch } = useQuery<
-    IFeaturedPlaylists,
+    IPlaylistCoverImage[],
     IError
   >({
-    queryKey: ['featured-playlists'],
-    queryFn: () => getFeaturedPlaylists(token),
-    enabled: !!token,
+    queryKey: ['playlist-cover-image', playlistId],
+    queryFn: () => getPlaylistCoverImage(token, playlistId),
+    enabled: !!token && !!playlistId,
   });
 
   if (error && error.status === 401) {
@@ -32,6 +31,5 @@ export default function useFeaturedPlaylists() {
     queryClient.invalidateQueries({ queryKey: ['token'] });
     refetch;
   }
-
   return { data, isLoading, error };
 }

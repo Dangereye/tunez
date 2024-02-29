@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 
 // Hooks
 import usePlaylist from '../features/playlists/usePlaylist';
+import usePlaylistCoverImage from '../features/playlists/usePlaylistCoverImage';
 
 // Components
 import Loader from '../ui/Loader';
@@ -15,13 +16,19 @@ import { formatRuntime } from '../utilities/formatRuntime';
 
 export default function Playlist() {
   const { playlistId } = useParams();
-  const { data, isLoading, error } = usePlaylist(playlistId);
+  const {
+    data: playlist,
+    isLoading: playlistIsLoading,
+    error: playlistError,
+  } = usePlaylist(playlistId);
+  const { data: playlistCoverImage, isLoading: playlistCoverImageIsLoading } =
+    usePlaylistCoverImage(playlistId);
 
-  if (isLoading) return <Loader />;
+  if (playlistIsLoading || playlistCoverImageIsLoading) return <Loader />;
 
-  if (error) return <ErrorMessage message={error.message} />;
+  if (playlistError) return <ErrorMessage message={playlistError.message} />;
 
-  const primaryColor = data?.primary_color || '#ffffff';
+  const primaryColor = playlist?.primary_color || '#ffffff';
 
   return (
     <>
@@ -29,15 +36,25 @@ export default function Playlist() {
         style={{ color: primaryColor }}
         className={`flex items-end p-8 gap-8 bg-zinc-950 h-[350px]`}
       >
+        {playlistCoverImage?.at(0)?.url && (
+          <div>
+            <img
+              src={playlistCoverImage?.at(0)?.url}
+              alt={playlist?.name}
+              width='250px'
+              height='250px'
+            />
+          </div>
+        )}
         <div className='flex flex-col gap-2 leading-none'>
-          <div className='capitalize'>{data?.type}</div>
-          <h1 className='mb-4 text-7xl'>{data?.name}</h1>
-          <div className='mb-2 text-2xl italic'>{data?.description}</div>
+          <div className='capitalize'>{playlist?.type}</div>
+          <h1 className='mb-4 font-black text-7xl'>{playlist?.name}</h1>
+          <div className='mb-2 text-2xl italic'>{playlist?.description}</div>
           <div className='flex items-center gap-2'>
-            {data?.uri && (
+            {playlist?.uri && (
               <>
                 <Link
-                  to={data?.uri}
+                  to={playlist?.uri}
                   target='_blank'
                   rel='noopener noreferrer'
                   className='flex items-center gap-1'
@@ -50,22 +67,22 @@ export default function Playlist() {
                 <div>∘</div>
               </>
             )}
-            {data?.followers && (
+            {playlist?.followers && (
               <>
                 <div>
                   Followers:{' '}
                   <span className='font-medium'>
-                    {formatNumber(data?.followers?.total)}
+                    {formatNumber(playlist?.followers?.total)}
                   </span>
                 </div>
                 <div>∘</div>
               </>
             )}
-            {data?.tracks.total && (
+            {playlist?.tracks.total && (
               <>
                 <div>
                   Songs:{' '}
-                  <span className='font-medium'>{data?.tracks?.total}</span>
+                  <span className='font-medium'>{playlist?.tracks?.total}</span>
                 </div>
                 <div>∘</div>
               </>
@@ -74,7 +91,7 @@ export default function Playlist() {
               Runtime:{' '}
               <span className='font-medium'>
                 {formatRuntime(
-                  data?.tracks?.items?.reduce(
+                  playlist?.tracks?.items?.reduce(
                     (acc, curr) => acc + curr?.track?.duration_ms || 0,
                     0
                   )

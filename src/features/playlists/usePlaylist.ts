@@ -8,7 +8,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AuthContext } from '../../context/AuthContext';
 
 // Services
-import { getPlaylist } from '../../services/playlist';
+import { getPlaylist } from '../../services/playlists';
 
 // Interfaces
 import { IPlaylist } from '../../interfaces/IPlaylist';
