@@ -17,6 +17,8 @@ export async function getFeaturedPlaylists(token: string) {
 
     return data;
   }
+
+  return;
 }
 
 export async function getPlaylist(
@@ -41,6 +43,8 @@ export async function getPlaylist(
 
     return data;
   }
+
+  return;
 }
 
 export async function getPlaylistCoverImage(
@@ -65,4 +69,6 @@ export async function getPlaylistCoverImage(
 
     return data;
   }
+
+  return;
 }
