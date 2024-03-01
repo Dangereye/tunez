@@ -23,30 +23,35 @@ export default function PlaylistHeader({
 }: PlaylistHeaderProps) {
   return (
     <header
-      className={`flex items-end p-8 gap-8 text-white bg-zinc-950 h-[350px]`}
+      className={`flex flex-col md:flex-row items-start md:items-end p-4 md:p-8 gap-8 text-white bg-zinc-950 lg:h-[350px]`}
     >
       {playlistCoverImage?.at(0)?.url && (
-        <div>
+        <div className='flex w-full justify-center  md:w-[250px]'>
           <img
+            className='w-[400px] md:w-[250px]'
             src={playlistCoverImage?.at(0)?.url}
             alt={playlist?.name}
-            width='250px'
-            height='250px'
+            width='100%'
+            height='100%'
           />
         </div>
       )}
       <div className='flex flex-col gap-2 leading-none'>
         <div className='capitalize text-primary'>{playlist?.type}</div>
-        <h1 className='mb-4 font-black text-7xl'>{playlist?.name}</h1>
-        <div className='mb-2 text-2xl italic'>{playlist?.description}</div>
-        <div className='flex items-center gap-2'>
+        <h1 className='mb-1 text-2xl font-black md:text-4xl xl:text-7xl'>
+          {playlist?.name}
+        </h1>
+        <div className='mb-2 italic md:text-xl lg:text-2xl'>
+          {playlist?.description}
+        </div>
+        <div className='flex flex-wrap items-center gap-2'>
           {playlist?.uri && (
             <>
               <Link
                 to={playlist?.uri}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='flex items-center gap-1'
+                className='flex items-center gap-2'
               >
                 <div className='w-[21px] h[21px]'>
                   <SpotifyIcon />

@@ -22,7 +22,7 @@ export default function AppLayout() {
   const { error } = useContext(AuthContext);
 
   return (
-    <div className='grid gap-2  md:grid-cols-[200px_minmax(0,_1fr)] grid-rows-[64px_calc(100vh_-_180px)_100px]'>
+    <div className='grid gap-2  lg:grid-cols-[200px_minmax(0,_1fr)] grid-rows-[64px_calc(100vh_-_180px)_100px]'>
       <Sidebar />
       <Header />
       <main className='flex flex-col h-full gap-4 overflow-scroll overflow-x-hidden bg-zinc-50'>
