@@ -1,18 +1,16 @@
+// Services
+import { base_url, GETRequestOptions } from './options';
+
 export async function getArtist(token: string, artistId: string) {
-  const options = {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  };
+  if (token && artistId) {
+    const options = GETRequestOptions(token);
 
-  const res = await fetch(
-    `https://api.spotify.com/v1/artists/${artistId}`,
-    options
-  );
+    const res = await fetch(`${base_url}/artists/${artistId}`, options);
 
-  const data = await res.json();
+    const data = await res.json();
 
-  return data;
+    return data;
+  }
+
+  return;
 }

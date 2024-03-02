@@ -1,17 +1,11 @@
+// Services
+import { base_url, GETRequestOptions } from './options';
+
 export async function getFeaturedPlaylists(token: string) {
   if (token) {
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    };
+    const options = GETRequestOptions(token);
 
-    const res = await fetch(
-      'https://api.spotify.com/v1/browse/featured-playlists',
-      options
-    );
+    const res = await fetch(`${base_url}/browse/featured-playlists`, options);
 
     const data = await res.json();
 
@@ -26,18 +20,9 @@ export async function getPlaylist(
   playlistId: string | undefined
 ) {
   if (token && playlistId) {
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    };
+    const options = GETRequestOptions(token);
 
-    const res = await fetch(
-      `https://api.spotify.com/v1/playlists/${playlistId}`,
-      options
-    );
+    const res = await fetch(`${base_url}/playlists/${playlistId}`, options);
 
     const data = await res.json();
 
@@ -52,16 +37,10 @@ export async function getPlaylistCoverImage(
   playlistId: string | undefined
 ) {
   if (token && playlistId) {
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    };
+    const options = GETRequestOptions(token);
 
     const res = await fetch(
-      `https://api.spotify.com/v1/playlists/${playlistId}/images`,
+      `${base_url}/playlists/${playlistId}/images`,
       options
     );
 
