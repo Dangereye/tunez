@@ -1,12 +1,18 @@
-export function formatRuntime(millis: number | undefined) {
-  if (millis) {
-    const date = new Date(millis);
-    const hrs = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-    const mins =
-      date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-    const secs =
-      date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
-    return `${hrs}:${mins}:${secs}`;
+export function formatRuntime(ms: number | undefined) {
+  if (ms) {
+    let s = Math.floor(ms / 1000);
+    let m = Math.floor(s / 60);
+    s = s % 60;
+    let h = Math.floor(m / 60);
+    m = m % 60;
+    h = h % 60;
+
+    const hrs = h > 0 && h < 10 ? `0${h}:` : h > 0 ? `${h}:` : '';
+    const mins = h > 0 && m > 0 && m < 10 ? `0${m}:` : m > 0 ? `${m}:` : '';
+    const secs = s > 0 && s < 10 ? `0${s}` : s > 0 ? `${s}` : '00';
+
+    return `${hrs}${mins}${secs}`;
   }
-  return millis;
+
+  return `00:00`;
 }
