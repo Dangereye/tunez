@@ -14,7 +14,7 @@ export default function PlaylistTracks({ items }: PlaylistTracksProps) {
     <section>
       <PlaylistTracksHeader />
       {items?.map((item, i) => (
-        <PlaylistTrack item={item} index={i} />
+        <PlaylistTrack key={item.track.id} item={item} index={i} />
       ))}
     </section>
   );
