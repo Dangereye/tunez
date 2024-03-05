@@ -18,6 +18,7 @@ export default function Playlist() {
     isLoading: playlistIsLoading,
     error: playlistError,
   } = usePlaylist(playlistId);
+
   const { data: playlistCoverImage, isLoading: playlistCoverImageIsLoading } =
     usePlaylistCoverImage(playlistId);
 
@@ -31,7 +32,6 @@ export default function Playlist() {
         playlist={playlist}
         playlistCoverImage={playlistCoverImage}
       />
-
       <PlaylistTracks items={playlist?.tracks.items} />
     </>
   );
