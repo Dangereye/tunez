@@ -10,7 +10,7 @@ type PlaylistTrackAlbumProps = {
 
 export default function PlaylistTrackAlbum({ item }: PlaylistTrackAlbumProps) {
   return (
-    <div className='hidden md:block'>
+    <div className='hidden truncate md:block'>
       <Link
         to={`/album/${item.track.album.id}`}
         className='text-sm hover:underline'

@@ -11,10 +11,15 @@ type PlaylistTrackTitleProps = {
 export default function PlaylistTrackTitle({ item }: PlaylistTrackTitleProps) {
   return (
     <div className='flex gap-2'>
-      <div className='w-[50px] h-[50px]'>
-        <img src={item.track.album.images.at(0)?.url} />
+      <div className='min-w-[50px] min-h-[50px]'>
+        <img
+          src={item.track.album.images.at(0)?.url}
+          alt={item.track.name}
+          width='50px'
+          height='50px'
+        />
       </div>
-      <div>
+      <div className='truncate'>
         <Link
           to={`/track/${item.track.id}`}
           className='font-bold hover:underline'
@@ -26,7 +31,7 @@ export default function PlaylistTrackTitle({ item }: PlaylistTrackTitleProps) {
             <Link
               key={`${item.track.id}-${artist.id}`}
               to={`/artist/${artist.id}`}
-              className='text-sm hover:underline'
+              className='text-sm truncate hover:underline'
             >
               {artist.name}
             </Link>
